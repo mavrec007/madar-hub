@@ -3,7 +3,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import RequireAuth from '../guards/RequireAuth';
 import RequirePermission from '../guards/RequirePermission';
 import GlobalSpinner from '@/components/layout/GlobalSpinner';
-import { AppLayout } from '@/layout/AppLayout';
 
 // Lazy load all pages for code splitting
 const Dashboard = lazy(() => import('@/pages/Dashboard/DashboardPage'));
@@ -22,7 +21,6 @@ const Archive = lazy(() => import('@/pages/Archive/ArchivePage'));
 const Reports = lazy(() => import('@/pages/Reports/ReportsPage'));
 const Forbidden = lazy(() => import('@/pages/Forbidden/ForbiddenPage'));
 const Login = lazy(() => import('@/pages/Auth/LoginPage'));
-const Settings = lazy(() => import('@/pages/SettingsPage'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
 const router = createBrowserRouter([
@@ -37,7 +35,7 @@ const router = createBrowserRouter([
   {
     element: (
       <RequireAuth>
-        <AppLayout />
+        <RequirePermission />
       </RequireAuth>
     ),
     children: [
@@ -170,14 +168,6 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<GlobalSpinner />}>
             <Reports />
-          </Suspense>
-        )
-      },
-      { 
-        path: '/settings', 
-        element: (
-          <Suspense fallback={<GlobalSpinner />}>
-            <Settings />
           </Suspense>
         )
       },
