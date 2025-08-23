@@ -5,6 +5,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig(({ mode }) => ({
   server: {
+    port: 8080,
     proxy: {
       '/broadcasting': {
         target: 'http://127.0.0.1:8000',
@@ -13,7 +14,6 @@ export default defineConfig(({ mode }) => ({
       },
     },
     host: '::',
-    port: 3000,
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'laravel-echo'],

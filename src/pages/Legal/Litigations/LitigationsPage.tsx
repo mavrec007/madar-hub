@@ -1,0 +1,1 @@
+import React from 'react'; import AppLayout from '@/layout/AppLayout'; const LitigationsPage = () => <AppLayout><div className="p-6"><h1 className="text-2xl font-bold">القضايا</h1><p>قريباً</p></div></AppLayout>; export default LitigationsPage;

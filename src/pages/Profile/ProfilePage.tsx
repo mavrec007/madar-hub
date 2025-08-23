@@ -1,0 +1,1 @@
+import React from 'react'; import AppLayout from '@/layout/AppLayout'; const ProfilePage = () => <AppLayout><div className="p-6"><h1 className="text-2xl font-bold">الملف الشخصي</h1><p>قريباً</p></div></AppLayout>; export default ProfilePage;

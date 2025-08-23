@@ -73,4 +73,4 @@ const ButtonCollection = () => {
   );
 };
 
-export { Button, ButtonCollection };
+export { Button, buttonVariants, ButtonCollection };

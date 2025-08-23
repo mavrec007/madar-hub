@@ -1,0 +1,1 @@
+import React from 'react'; import AppLayout from '@/layout/AppLayout'; const LegalAdvicesPage = () => <AppLayout><div className="p-6"><h1 className="text-2xl font-bold">الاستشارات القانونية</h1><p>قريباً</p></div></AppLayout>; export default LegalAdvicesPage;
