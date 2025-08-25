@@ -5,7 +5,7 @@ import Echo from 'laravel-echo';
 const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'ws://localhost:6001';
 
 let socket: Socket | null = null;
-let echo: Echo | null = null;
+let echo: any | null = null;
 
 // Initialize Socket.IO connection
 export const initializeSocket = (): Socket => {
@@ -34,7 +34,7 @@ export const initializeSocket = (): Socket => {
 };
 
 // Initialize Laravel Echo with Socket.IO
-export const initializeEcho = (): Echo => {
+export const initializeEcho = (): any => {
   if (!echo) {
     // Ensure Socket.IO is available globally for Laravel Echo
     (window as any).io = io;
@@ -104,4 +104,4 @@ export const disconnectSocket = () => {
 export const getSocket = (): Socket | null => socket;
 
 // Get current echo instance
-export const getEcho = (): Echo | null => echo;
+export const getEcho = (): any | null => echo;
