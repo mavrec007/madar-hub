@@ -4,7 +4,7 @@ import ResponsiveLayout from '@/components/ResponsiveLayout';
 import { useMobileTheme } from '@/components/MobileThemeProvider';
 import { useLanguage } from '@/context/LanguageContext';
 
-const Header = lazy(() => import('@/components/dashboard/Header'));
+const Header = lazy(() => import('@/components/layout/DashboardHeader'));
 const AppSidebar = lazy(() => import('./AppSidebar'));
 
 export default function AppLayout({ children, user }) {
@@ -48,7 +48,7 @@ export default function AppLayout({ children, user }) {
 
   return (
     <ResponsiveLayout className="min-h-screen flex flex-col sm:flex-row relative">
-      <Suspense fallback={<div className="text-center p-4">جاري تحميل القائمة الجانبية...</div>}>
+      <Suspense fallback={null}>
         <AppSidebar
           isOpen={sidebarOpen}
           onToggle={toggleSidebar}
@@ -56,19 +56,19 @@ export default function AppLayout({ children, user }) {
         />
         {(isMobile || isTablet) && sidebarOpen && (
           <div
-            className="fixed inset-0 bg-black/50 z-10"
+            className="fixed inset-0 bg-foreground/50 z-10"
             onClick={() => setSidebarOpen(false)}
           />
         )}
       </Suspense>
       <div className="flex-1 flex flex-col transition-all duration-300">
-        <Suspense fallback={<div className="text-center p-4">جاري تحميل الرأس...</div>}>
+        <Suspense fallback={null}>
           <Header user={user} isOpen={sidebarOpen} onToggleSidebar={toggleSidebar} />
         </Suspense>
         <main
           className={`
             flex-1 px-4 sm:px-6 lg:px-8
-            bg-greenic-light/10 dark:bg-greenic-darker/20
+            bg-bg
             transition-all duration-500
             ${isMobile ? 'mobile-main' : 'desktop-main'}
             ${isStandalone ? 'standalone-main' : ''}

@@ -1,54 +1,61 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+import ar from '@/locales/ar.json';
+import en from '@/locales/en.json';
 
-const translations = {
-  ar: {
-    home: 'الرئيسية',
-    contracts: 'التعاقدات',
-    investigations: 'التحقيقات',
-    legalAdvices: 'المشورة القانونية',
-    litigations: 'التقاضي',
-    management: 'إدارة التطبيق',
-    lists: 'القوائم',
-    users: 'إدارة المستخدمين',
-    usersList: 'المستخدمين',
-    archive: 'الأرشيف',
-    fatwa: 'الرأي والفتوى'
-  },
-  en: {
-    home: 'Home',
-    contracts: 'Contracts',
-    investigations: 'Investigations',
-    legalAdvices: 'Legal Advices',
-    litigations: 'Litigations',
-    management: 'App Management',
-    lists: 'Lists',
-    users: 'Users Management',
-    usersList: 'Users',
-    archive: 'Archive',
-    fatwa: 'Fatwa'
-  }
+const translations = { ar, en };
+const LanguageContext = createContext(null);
+
+// ✅ get nested value by path: "notifications.assignment.title"
+const getByPath = (obj, path) => {
+  if (!obj || !path) return undefined;
+  return path.split('.').reduce((acc, key) => (acc && acc[key] !== undefined ? acc[key] : undefined), obj);
 };
 
-const LanguageContext = createContext();
+const interpolate = (str, params = {}) =>
+  String(str).replace(/\{(\w+)\}/g, (_, k) => (params?.[k] ?? ''));
 
 export const LanguageProvider = ({ children }) => {
-  const [lang, setLang] = useState('ar');
+  const getInitialLanguage = () => {
+    if (typeof window === 'undefined') return 'en';
+    const storedLang = localStorage.getItem('lang');
+    if (storedLang === 'ar' || storedLang === 'en') return storedLang;
+    return navigator.language?.toLowerCase().startsWith('ar') ? 'ar' : 'en';
+  };
+
+  const [lang, setLang] = useState(getInitialLanguage);
 
   useEffect(() => {
     document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
   }, [lang]);
 
-  const toggleLanguage = () => setLang(prev => (prev === 'ar' ? 'en' : 'ar'));
+  const toggleLanguage = () => setLang((prev) => (prev === 'en' ? 'ar' : 'en'));
 
-  const t = key => translations[lang][key] || key;
+  const translationsMemo = useMemo(() => translations[lang] || translations.en, [lang]);
+
+  // ✅ t(path, params)
+  const t = (path, params) => {
+    const value = getByPath(translationsMemo, path);
+    if (value === undefined) return path;
+    return typeof value === 'string' ? interpolate(value, params) : value;
+  };
+
   const dir = lang === 'ar' ? 'rtl' : 'ltr';
 
+  const formatNumber = (num, language = lang) =>
+    new Intl.NumberFormat(language === 'ar' ? 'ar-EG' : 'en-US').format(num);
+
   return (
-    <LanguageContext.Provider value={{ lang, dir, toggleLanguage, t }}>
+
+    <LanguageContext.Provider value={{ lang, dir, toggleLanguage, t, formatNumber, translations: translationsMemo }}>
       {children}
     </LanguageContext.Provider>
   );
 };
 
-export const useLanguage = () => useContext(LanguageContext);
-
+export const useLanguage = () => {
+  const ctx = useContext(LanguageContext);
+  if (!ctx) throw new Error('useLanguage must be used within LanguageProvider');
+  return ctx;
+};

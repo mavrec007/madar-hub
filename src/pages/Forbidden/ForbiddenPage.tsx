@@ -1,1 +1,0 @@
-import React from 'react'; const ForbiddenPage = () => <div className="min-h-screen flex items-center justify-center"><div className="text-center"><h1 className="text-4xl font-bold text-red-600">403</h1><p className="text-xl mt-4">غير مصرح لك بالوصول</p></div></div>; export default ForbiddenPage;

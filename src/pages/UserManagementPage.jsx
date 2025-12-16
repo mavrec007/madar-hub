@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Edit2, Trash2 } from 'lucide-react';
+import { Edit2, Trash2, ArrowUp } from 'lucide-react';
+
 import { toast } from "sonner";
 import SectionHeader from '@/components/common/SectionHeader';
 import TableComponent from '@/components/common/TableComponent';
-import UserModalForm from '@/components/Users/UserModalForm';
-import UserInfoCard from '@/components/Users/UserInfoCard';
-import PermissionsSection from '@/components/Users/Sections/PermissionsSection';
+import UserModalForm from '@/features/users/components/UserModalForm';
+import UserInfoCard from '@/features/users/components/UserInfoCard';
+import PermissionsSection from '@/features/users/components/Sections/PermissionsSection';
 import GlobalConfirmDeleteModal from '@/components/common/GlobalConfirmDeleteModal';
 import { UsersIcon } from '@/assets/icons';
 import { Button } from '@/components/ui/button';
@@ -204,9 +205,21 @@ const handlePermChange = async (permName, shouldEnable, options = {}) => {
       </div>
     ),
   };
-
+  const handleBackToTable = () => {
+    // اقفل عرض التفاصيل
+    setExpandedUserId(null);
+    setSelectedUser(null);
+  
+    // ارجع للجدول بسلاسة
+    setTimeout(() => {
+      if (tableRef.current) {
+        tableRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 50);
+  };
+  
   return (
-    <div className="p-6 sm:p-4 lg:p-6 bg-white dark:bg-royal-darker/10">
+    <div className="p-6 sm:p-4 lg:p-6 mt-6">
       <motion.div
         key="section-header"
         initial={{ opacity: 0, y: -80 }}
@@ -214,7 +227,7 @@ const handlePermChange = async (permName, shouldEnable, options = {}) => {
         exit={{ opacity: 0, y: -40 }}
         transition={{ type: 'spring', stiffness: 60, damping: 18, delay: 0.1 }}
       >
-        <SectionHeader icon={UsersIcon} listName="إدارة المستخدمين والصلاحيات" />
+        <SectionHeader   showBackButton icon={UsersIcon} listName="إدارة المستخدمين والصلاحيات" />
       </motion.div>
 
       <div className="bg-white dark:bg-gray-900 rounded-lg shadow border border-gray-200 dark:border-zinc-700">
@@ -293,13 +306,31 @@ const handlePermChange = async (permName, shouldEnable, options = {}) => {
             <h2 className="text-xl font-semibold text-center text-green-700 dark:text-green-400 mt-4">
               صلاحيات المستخدم
             </h2>
+            <div className="flex justify-start">
+  <motion.button
+    type="button"
+    onClick={handleBackToTable}
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    className="w-10 h-10 rounded-full flex items-center justify-center
+               bg-primary hover:bg-destructive text-white shadow
+               border border-green-700/20"
+    aria-label="العودة للجدول"
+    title="العودة للجدول"
+  >
+    <ArrowUp className="w-5 h-5" />
+  </motion.button>
+</div>
+
             <PermissionsSection
               allPermissions={allPerms}
               userPermissions={selectedUser.permissions}
               handlePermissionChange={handlePermChange}
               loading={loading}
             />
+            
           </motion.div>
+
         )}
       </AnimatePresence>
 {showNewUserAlert && (

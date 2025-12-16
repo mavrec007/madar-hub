@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useContext, lazy, Suspense } from 'react';
 
 import AuthSpinner from '@/components/common/Spinners/AuthSpinner';
-import { AuthContext } from '@/components/auth/AuthContext';
+import { AuthContext } from '@/context/AuthContext';
 import { AnimatePresence } from 'framer-motion';
 import { MobileThemeProvider } from '@/components/MobileThemeProvider';
-import { NotificationProvider } from '@/components/Notifications/NotificationContext';
+import { NotificationProvider } from '@/context/NotificationContext';
 import { AppWithQuery } from '@/hooks/dataHooks';
-import { LanguageProvider } from '@/context/LanguageContext';
 
 const AppLayout = lazy(() => import('@/components/layout/AppLayout'));
 const AuthRoutes = lazy(() => import('@/components/layout/AuthRoutes'));
-const ForcePasswordChangeModal = lazy(() => import('@/components/auth/ForcePasswordChangeModal'));
+const ForcePasswordChangeModal = lazy(() => import('@/components/organisms/ForcePasswordChangeModal'));
 
 const DashboardContent = () => {
   const { user } = useContext(AuthContext);
@@ -38,13 +37,11 @@ const DashboardContent = () => {
 
 const AuthWrapper = () => (
   <MobileThemeProvider>
-    <LanguageProvider>
-      <AppWithQuery>
-        <NotificationProvider>
-          <DashboardContent />
-        </NotificationProvider>
-      </AppWithQuery>
-    </LanguageProvider>
+    <AppWithQuery>
+      <NotificationProvider>
+        <DashboardContent />
+      </NotificationProvider>
+    </AppWithQuery>
   </MobileThemeProvider>
 );
 

@@ -1,7 +1,7 @@
-import { useState, useRef, useEffect ,useContext} from 'react';
+import { useState, useRef, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Transition from '../../utils/Transition';
-import { AuthContext } from '@/components/auth/AuthContext';
+import { AuthContext } from '@/context/AuthContext';
 import { useSpinner } from '@/context/SpinnerContext';
 import { toast } from 'sonner';
 import API_CONFIG from '@/config/config';
@@ -62,7 +62,9 @@ export default function UserMenu({ align = 'right' }) {
     showSpinner();
     try {
       await logout();
-      toast.success('✅ تم تسجيل الخروج بنجاح', { description: 'نراك قريبًا!' });
+      toast.success('✅ تم تسجيل الخروج بنجاح', {
+        description: 'نراك قريبًا!',
+      });
       navigate('/login');
     } catch {
       toast.error('❌ حدث خطأ أثناء تسجيل الخروج');
@@ -78,7 +80,7 @@ export default function UserMenu({ align = 'right' }) {
         onClick={() => setDropdownOpen(!dropdownOpen)}
         className="inline-flex items-center gap-2 focus:outline-none"
       >
-        <span className="hidden md:inline font-bold text-white dark:text-gold-light">
+        <span className="hidden md:inline font-bold text-fg">
           {user?.name || 'زائر'}
         </span>
         <img
@@ -87,16 +89,17 @@ export default function UserMenu({ align = 'right' }) {
           alt={user?.name || 'المستخدم'}
           className="w-8 h-8 rounded-full object-cover"
         />
-        <svg className="w-3 h-3 text-muted-foreground" viewBox="0 0 12 12">
+        <svg className="w-3 h-3 text-muted" viewBox="0 0 12 12">
           <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
         </svg>
       </button>
 
       <Transition
         show={dropdownOpen}
-        className={`absolute z-50 top-11 ${align === 'right' ? 'right-0' : 'left-0'} ` +
-          'min-w-44 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 ' +
-          'rounded-lg shadow-lg py-2 ring-1 ring-black ring-opacity-5'}
+        className={
+          `absolute z-50 top-11 ${align === 'right' ? 'right-0' : 'left-0'} ` +
+          'min-w-44 bg-card border border-border rounded-lg shadow-lg py-2 ring-1 ring-ring'
+        }
         enter="transition ease-out duration-200"
         enterStart="opacity-0 -translate-y-2"
         enterEnd="opacity-100 translate-y-0"
@@ -104,12 +107,12 @@ export default function UserMenu({ align = 'right' }) {
         leaveStart="opacity-100"
         leaveEnd="opacity-0"
       >
-        <ul className="text-sm text-gray-700 dark:text-gray-200">
+        <ul className="text-sm text-fg">
           <li>
             <Link
               to="/profile"
               onClick={() => setDropdownOpen(false)}
-              className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="flex items-center px-4 py-2 hover:bg-muted"
             >
               الملف الشخصى
             </Link>
@@ -117,7 +120,7 @@ export default function UserMenu({ align = 'right' }) {
           <li>
             <button
               onClick={handleLogout}
-              className="flex items-center px-4 py-2 text-red-600 hover:bg-gray-100 dark:hover:bg-gray-700 w-full text-right"
+              className="flex items-center w-full px-4 py-2 text-destructive hover:bg-muted text-right"
             >
               تسجيل الخروج
             </button>

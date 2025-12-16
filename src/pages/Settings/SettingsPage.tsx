@@ -1,1 +1,0 @@
-import React from 'react'; import AppLayout from '@/layout/AppLayout'; const SettingsPage = () => <AppLayout><div className="p-6"><h1 className="text-2xl font-bold">الإعدادات</h1><p>قريباً</p></div></AppLayout>; export default SettingsPage;

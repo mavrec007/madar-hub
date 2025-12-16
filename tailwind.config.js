@@ -1,117 +1,79 @@
+// tailwind.config.js
 import forms from '@tailwindcss/forms';
 import typography from '@tailwindcss/typography';
 
 export default {
-  darkMode: ['class', '[data-theme="dark"]'],
-  content: [
-    './index.html',
-    './src/**/*.{js,jsx,ts,tsx}',
-  ],
+  darkMode: ['class'],
+  content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    container: {
-      center: true,
-      padding: '1rem',
-      screens: { '2xl': '1280px' },
-    },
+    container: { center: true, padding: '1rem', screens: { '2xl': '1280px' } },
     extend: {
       colors: {
-        // الأساسيات المطابقة لـ index.css
-        background: 'hsl(var(--background))',
-        foreground: 'hsl(var(--foreground))',
+        // base
+        bg: 'var(--bg)',
+        fg: 'var(--fg)',
+        background: 'var(--bg)',
+        foreground: 'var(--fg)',
+        muted: 'var(--muted)',
+        'muted-foreground': 'var(--muted-foreground)',
 
-        border: 'hsl(var(--border))',
-        input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
+        // surfaces
+        card: { DEFAULT: 'var(--card)', foreground: 'var(--fg)' },
+        popover: { DEFAULT: 'var(--popover)', foreground: 'var(--fg)' },
 
-        card: 'hsl(var(--card))',
-        'card-foreground': 'hsl(var(--card-foreground))',
-        'card-hover': 'hsl(var(--card-hover))',
+        // brand & actions
+        primary: { DEFAULT: 'var(--primary)', foreground: 'var(--primary-foreground)' },
+        secondary: 'var(--secondary)',
+        accent: 'var(--accent)',
 
-        muted: 'hsl(var(--muted))',
-        'muted-foreground': 'hsl(var(--muted-foreground))',
+        // states
+        success: 'var(--success)',
+        warning: 'var(--warning)',
+        destructive: 'var(--destructive)',
 
-        secondary: 'hsl(var(--secondary))',
-        'secondary-foreground': 'hsl(var(--secondary-foreground))',
+        // lines
+        border: 'var(--border)',
+        input: 'var(--input)',
+        ring: 'var(--ring)',
 
-        primary: 'hsl(var(--primary))',
-        'primary-foreground': 'hsl(var(--primary-foreground))',
-        'primary-muted': 'hsl(var(--primary-muted))',
-
-        accent: 'hsl(var(--accent))',
-        'accent-foreground': 'hsl(var(--accent-foreground))',
-        'accent-light': 'hsl(var(--accent-light))',
-
-        success: 'hsl(var(--success))',
-        'success-foreground': 'hsl(var(--success-foreground))',
-
-        warning: 'hsl(var(--warning))',
-        'warning-foreground': 'hsl(var(--warning-foreground))',
-
-        destructive: 'hsl(var(--destructive))',
-        'destructive-foreground': 'hsl(var(--destructive-foreground))',
-
-        popover: 'hsl(var(--popover))',
-        'popover-foreground': 'hsl(var(--popover-foreground))',
-
-        // ألوان الـ Sidebar
-        'sidebar-background': 'hsl(var(--sidebar-background))',
-        'sidebar-foreground': 'hsl(var(--sidebar-foreground))',
-        'sidebar-primary': 'hsl(var(--sidebar-primary))',
-        'sidebar-primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-        'sidebar-accent': 'hsl(var(--sidebar-accent))',
-        'sidebar-accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-        'sidebar-border': 'hsl(var(--sidebar-border))',
-        'sidebar-ring': 'hsl(var(--sidebar-ring))',
-
-        // Legacy palette
-        greenic: {
-          DEFAULT: 'hsl(var(--greenic))',
-          light: 'hsl(var(--greenic-light))',
-          dark: 'hsl(var(--greenic-dark))',
-          darker: 'hsl(var(--greenic-darker))',
+        // sidebar
+        sidebar: {
+          DEFAULT: 'var(--sidebar-bg)',
+          fg: 'var(--sidebar-fg)',
+          muted: 'var(--sidebar-muted)',
+          active: 'var(--sidebar-active)',
         },
-        royal: {
-          DEFAULT: 'hsl(var(--royal))',
-          light: 'hsl(var(--royal-light))',
-          dark: 'hsl(var(--royal-dark))',
-          darker: 'hsl(var(--royal-darker))',
-          ultraDark: 'hsl(var(--royal-ultraDark))',
-          electric: 'hsl(var(--royal-electric))',
+
+        // charts & map
+        chart: {
+          1: 'var(--chart-1)', 2: 'var(--chart-2)', 3: 'var(--chart-3)', 4: 'var(--chart-4)',
+          5: 'var(--chart-5)', 6: 'var(--chart-6)', 7: 'var(--chart-7)', 8: 'var(--chart-8)',
+          grid: 'var(--chart-grid)',
         },
-        gold: {
-          DEFAULT: 'hsl(var(--gold))',
-          light: 'hsl(var(--gold-light))',
-          dark: 'hsl(var(--gold-dark))',
-        },
-        navy: {
-          DEFAULT: 'hsl(var(--navy))',
-          light: 'hsl(var(--navy-light))',
-          dark: 'hsl(var(--navy-dark))',
-          darker: 'hsl(var(--navy-darker))',
-        },
-        reded: {
-          DEFAULT: 'hsl(var(--reded))',
-        },
+        map: { start: 'var(--map-start)', mid: 'var(--map-mid)', end: 'var(--map-end)' },
       },
-      borderRadius: {
-        xl: '0.9rem',
-        '2xl': '1.25rem',
-        '2xl': '1.25rem',
+      backgroundImage: {
+        'map-gradient': 'linear-gradient(90deg, var(--map-start), var(--map-mid), var(--map-end))',
+        'gradient-primary': 'linear-gradient(135deg, var(--primary), var(--accent))',
+        'gradient-subtle': 'var(--gradient-subtle)',   // ⬅️ مضافة
+        'gradient-card': 'linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.06))',
       },
       boxShadow: {
-        soft: '0 6px 24px rgba(0,0,0,0.06)',
-        focus: '0 0 0 4px rgba(56,189,248,0.25)',
-        card: '0 10px 40px rgba(0,0,0,0.08)',
+        sm: 'var(--shadow-sm)',
+        md: 'var(--shadow-md)',
+        lg: 'var(--shadow-lg)',
+        xl: 'var(--shadow-lg)',
+        glow: 'var(--shadow-glow)',
+        light: '0 8px 24px var(--shadow-light)',
+        dark: '0 16px 40px var(--shadow-dark)',
       },
-   backgroundImage: {
-        'gradient-brand': 'linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%)',
-        'gradient-hero': 'var(--gradient-hero)',
-        'gradient-primary': 'var(--gradient-primary)',
-        'gradient-accent': 'var(--gradient-accent)',
+      borderRadius: {
+        xl: 'var(--radius)',
+        '2xl': 'calc(var(--radius) + 8px)',
       },
-      transitionTimingFunction: {
-        'ease-soft': 'cubic-bezier(.2,.8,.2,1)',
-        'ease-smooth': 'var(--transition-smooth)',
+      fontFamily: {
+        heading: ['var(--font-heading)', 'inherit'],
+        body: ['var(--font-body)', 'inherit'],
       },
     },
   },
