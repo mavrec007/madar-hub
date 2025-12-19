@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+    
+    /* Fonts */
+    --font-body: 'Cairo', 'Roboto', system-ui, sans-serif;
+    --font-heading: 'Lora', 'Cairo', Georgia, serif;
+
+    /* Base */
+    --background: 0 0% 100%;
+    --foreground: 0 0% 13%;
+    --bg: 0 20% 96%;
+    --fg: 0 0% 13%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 13%;
+
+    /* Brand */
+    --primary: 156 72% 28%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 146 91% 45%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 25 90% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Neutral */
+    --muted: 210 14% 92%;
+    --muted-foreground: 215 16% 45%;
+
+    /* Status */
+    --success: 156 72% 35%;
+    --warning: 40 95% 55%;
+    --destructive: 0 75% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Borders / Inputs */
+    --border: 0 0% 82%;
+    --input: 0 0% 82%;
+    --ring: 156 72% 32%;
+
+    --radius: 0.75rem;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(156 72% 28%), hsl(146 91% 45%));
+    --gradient-hero: linear-gradient(180deg, hsl(150 40% 12%) 0%, hsl(156 50% 8%) 100%);
+  }
+
+  .dark {
+    --background: 150 30% 6%;
+    --foreground: 0 0% 95%;
+    --bg: 150 30% 6%;
+    --fg: 0 0% 95%;
+
+    --card: 150 25% 10%;
+    --card-foreground: 0 0% 95%;
+    --popover: 150 25% 10%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 156 72% 40%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 146 70% 50%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 45 90% 55%;
+    --accent-foreground: 0 0% 10%;
+
+    --muted: 150 20% 18%;
+    --muted-foreground: 150 10% 60%;
+
+    --border: 150 20% 20%;
+    --input: 150 20% 20%;
+    --ring: 156 72% 45%;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .glass {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .glass-card {
+    @apply glass rounded-2xl p-4 md:p-6;
+  }
+
+  .hover-scale {
+    @apply transition-transform duration-200 ease-in-out hover:scale-[1.02];
+  }
+
+  .hero-gradient {
+    background: linear-gradient(180deg, 
+      hsl(150 40% 8% / 0.95) 0%,
+      hsl(150 45% 6% / 0.98) 50%,
+      hsl(150 50% 4%) 100%
+    );
+  }
+}
